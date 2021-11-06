@@ -1,6 +1,7 @@
 package com.graczdev.ipcalculator.api;
 
-class CalculatorService {
+public class CalculatorService {
+
     private String[] ipAddressDecimal = {"0", "0", "0", "0"};
     private String[] subnetMaskDecimal = {"0", "0", "0", "0"};
 
@@ -9,13 +10,15 @@ class CalculatorService {
 
     private int subnetMaskNumber = 0;
 
-    public void setIpAddress(String ipAddressDecimal) {
+    CalculatorService() {}
+
+    void setIpAddress(String ipAddressDecimal) {
         String[] ipAddressArr = ipAddressDecimal.split("\\.");
         this.ipAddressDecimal = ipAddressArr;
         this.ipAddressBinary = CalculatorUtils.toBinary(ipAddressArr);
     }
 
-    public void setSubnetMask(String subnetMaskDecimal) {
+     void setSubnetMask(String subnetMaskDecimal) {
         String[] subnetMask = subnetMaskDecimal.split("\\.");
         this.subnetMaskDecimal = subnetMask;
         this.subnetMaskBinary = CalculatorUtils.toBinary(subnetMask);
