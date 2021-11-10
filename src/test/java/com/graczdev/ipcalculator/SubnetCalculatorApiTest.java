@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CalculatorApiTests {
+public class SubnetCalculatorApiTest {
 
     @Test
-    public void toBinaryTest() {
+    public void TestOfSubnetCalculatorApi() {
         SubnetCalculatorApi calculatorApi = new SubnetCalculatorApi()
                 .setIpAddress("185.146.54.21")
                 .setSubnetMask("255.255.240.0");
