@@ -1,7 +1,14 @@
 package com.graczdev.ipcalculator.api;
 
+import com.graczdev.ipcalculator.calculator.AddressType;
+import com.graczdev.ipcalculator.calculator.IPAddress;
+import com.graczdev.ipcalculator.calculator.IPMask;
+import com.graczdev.ipcalculator.calculator.NetworkUtils;
+
 public class CalculatorService {
 
+    private IPAddress address;
+    private IPAddress mask;
     private String[] ipAddressDecimal = {"0", "0", "0", "0"};
     private String[] subnetMaskDecimal = {"0", "0", "0", "0"};
 
@@ -14,14 +21,16 @@ public class CalculatorService {
 
     void setIpAddress(String ipAddressDecimal) {
         String[] ipAddressArr = ipAddressDecimal.split("\\.");
+        this.address = new IPAddress(ipAddressDecimal);
         this.ipAddressDecimal = ipAddressArr;
-        this.ipAddressBinary = CalculatorUtils.toBinary(ipAddressArr);
+        this.ipAddressBinary = NetworkUtils.toBinary(ipAddressArr);
     }
 
      void setSubnetMask(String subnetMaskDecimal) {
         String[] subnetMask = subnetMaskDecimal.split("\\.");
+        this.mask = new IPAddress(subnetMaskDecimal);
         this.subnetMaskDecimal = subnetMask;
-        this.subnetMaskBinary = CalculatorUtils.toBinary(subnetMask);
+        this.subnetMaskBinary = NetworkUtils.toBinary(subnetMask);
         this.subnetMaskNumber = String.join("", subnetMaskBinary).lastIndexOf("1") + 1;
     }
 
@@ -47,11 +56,11 @@ public class CalculatorService {
     }
 
     public String getNetAddress() {
-        return CalculatorUtils.makeAddress(ipAddressBinary, "0", subnetMaskNumber);
+        return NetworkUtils.makeAddress(address, IPMask.MASK_0, AddressType.NETWORK).decimal().joinDot();
     }
 
     public String getBroadcastAddress() {
-        return CalculatorUtils.makeAddress(ipAddressBinary, "1", subnetMaskNumber);
+        return NetworkUtils.makeAddress(address, IPMask.MASK_0, AddressType.BROADCAST).decimal().joinDot();
     }
 
     public int getAmountOfHosts() {

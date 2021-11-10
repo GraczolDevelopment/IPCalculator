@@ -1,8 +1,8 @@
-package com.graczdev.ipcalculator.api;
+package com.graczdev.ipcalculator.calculator;
 
 import java.util.function.Function;
 
-class CalculatorUtils {
+public class NetworkUtils {
 
     private static final String SPLIT_FOR_8_CHAR_PARTS = "(?<=\\G.{8})";
 
@@ -39,12 +39,24 @@ class CalculatorUtils {
         return result;
     }
 
-    public static String makeAddress(String[] addressInBinary, String s, int subnetMaskNumber) {
-        String[] formattedArr = (String.join("", addressInBinary)
-                .substring(0, subnetMaskNumber)
-                + s.repeat(32 - subnetMaskNumber))
-                .split(SPLIT_FOR_8_CHAR_PARTS);
+    public static IPAddress makeAddress(IPAddress address, IPMask mask, AddressType type) {
+        String joinedBinary = address.binary().join();
+        String removedBinary = joinedBinary.substring(0, mask.getCidr());
+        String filledBinary = removedBinary + type.getFill().toString().repeat(32 - mask.getCidr());
+        String addressText = IPAddress.AddressParts.of(convert(filledBinary.split(SPLIT_FOR_8_CHAR_PARTS), toDecimalFunction)).joinDot();
 
-        return String.join(".", formattedArr);
+        return new IPAddress(addressText);
     }
+
+    public static IPAddress cidrToIPAddress(int cidr) {
+        int mask = (0xffffffff >> (32 - cidr)) << (32 - cidr);
+        String address =
+                (0xff000000 & mask >> 24) + "." +
+                (0x00ff0000 & mask >> 16) + "." +
+                (0x0000ff00 & mask >> 8)  + "." +
+                (0x000000ff & mask);
+
+        return new IPAddress(address);
+    }
+
 }

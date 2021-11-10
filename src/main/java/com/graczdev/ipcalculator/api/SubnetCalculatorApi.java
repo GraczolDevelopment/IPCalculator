@@ -1,5 +1,7 @@
 package com.graczdev.ipcalculator.api;
 
+import com.graczdev.ipcalculator.calculator.NetworkUtils;
+
 public class SubnetCalculatorApi {
 
     private final CalculatorService calculatorService;
@@ -39,7 +41,7 @@ public class SubnetCalculatorApi {
     }
 
     public String getNetAddressDecimal() {
-        return CalculatorUtils.toDecimal(calculatorService.getNetAddress());
+        return NetworkUtils.toDecimal(calculatorService.getNetAddress());
     }
 
     public String getNetAddressBinary() {
@@ -51,7 +53,7 @@ public class SubnetCalculatorApi {
     }
 
     public String getBroadcastAddressDecimal() {
-        return CalculatorUtils.toDecimal(calculatorService.getBroadcastAddress());
+        return NetworkUtils.toDecimal(calculatorService.getBroadcastAddress());
     }
 
     public String getAmountOfHosts() {
@@ -63,7 +65,7 @@ public class SubnetCalculatorApi {
     }
 
     public String getMinHostDecimal() {
-        return CalculatorUtils.toDecimal(calculatorService.getMinHost());
+        return NetworkUtils.toDecimal(calculatorService.getMinHost());
     }
 
     public String getMaxHostBinary() {
@@ -71,7 +73,7 @@ public class SubnetCalculatorApi {
     }
 
     public String getMaxHostDecimal() {
-        return CalculatorUtils.toDecimal(calculatorService.getMaxHost());
+        return NetworkUtils.toDecimal(calculatorService.getMaxHost());
     }
 
     public String getNetworkClass() {
