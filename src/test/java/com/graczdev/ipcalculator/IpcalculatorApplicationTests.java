@@ -8,6 +8,7 @@ class IpcalculatorApplicationTests {
 
     @Test
     void contextLoads() {
+
     }
 
 }
