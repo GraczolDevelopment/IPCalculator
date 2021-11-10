@@ -1,5 +1,7 @@
 package com.graczdev.ipcalculator.calculator;
 
+import org.apache.commons.net.util.SubnetUtils;
+
 import java.util.function.Function;
 
 public class NetworkUtils {
@@ -49,14 +51,9 @@ public class NetworkUtils {
     }
 
     public static IPAddress cidrToIPAddress(int cidr) {
-        int mask = (0xffffffff >> (32 - cidr)) << (32 - cidr);
-        String address =
-                (0xff000000 & mask >> 24) + "." +
-                (0x00ff0000 & mask >> 16) + "." +
-                (0x0000ff00 & mask >> 8)  + "." +
-                (0x000000ff & mask);
-
-        return new IPAddress(address);
+        String builder = Bit.ONE.repeat(cidr) + Bit.ZERO.repeat(32 - cidr);
+        String ip = String.join(".", convert(builder.split(SPLIT_FOR_8_CHAR_PARTS), toDecimalFunction));
+        return new IPAddress(ip);
     }
 
 }

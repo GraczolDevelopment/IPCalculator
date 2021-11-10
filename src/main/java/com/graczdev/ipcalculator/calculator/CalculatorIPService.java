@@ -3,34 +3,29 @@ package com.graczdev.ipcalculator.calculator;
 public class CalculatorIPService {
 
     public AnaliseIPResult analiseIP(IPAddress address, IPMask mask) {
-        int maskNumber = mask.getCidr();
+        IPAddress netAddress = address.make(AddressType.NETWORK, mask);
+        IPAddress broadCastAddress = address.make(AddressType.BROADCAST, mask);
 
-//        IPAddress.AddressParts netAddress = address.make(AddressType.NETWORK, mask);
-//        IPAddress.AddressParts broadCastAddress = address.make(AddressType.BROADCAST, mask);
-//
-//        String netAddressText = netAddress.joinDot();
-//
-//        netAddress.substring(0, netAddress.length() - 1) + "1";
-//
-//        var builder = AnaliseIPResult.builder()
-//                .ipAddressDecimal(address.decimal().joinDot())
-//                .ipAddressBinary(address.binary().joinDot())
-//                .maskDecimal(mask.getAddress().decimal().joinDot())
-//                .maskBinary(mask.getAddress().binary().joinDot())
-//
-//                .broadCastAddressDecimal(broadCastAddress.joinDot())
-//                .broadCastAddressBinary(broadCastAddress.joinDot())
-//
-//                .networkClass(NetworkClass.of(address))
-//                .maskNumber(maskNumber)
-//                .amountOfHosts(mask.getHostCount())
-//
-//                .networkClass(netAddressText)
-//
+        return AnaliseIPResult.builder()
+                .ipAddressDecimal(address.decimal().joinDot())
+                .ipAddressBinary(address.binary().joinDot())
+                .maskDecimal(mask.getAddress().decimal().joinDot())
+                .maskBinary(mask.getAddress().binary().joinDot())
 
+                .netAddressDecimal(netAddress.decimal().joinDot())
+                .netAddressBinary(netAddress.binary().joinDot())
+                .broadCastAddressDecimal(broadCastAddress.decimal().joinDot())
+                .broadCastAddressBinary(broadCastAddress.binary().joinDot())
 
+                .maxHostDecimal(address.getMaxHost(mask).decimal().joinDot())
+                .maxHostBinary(address.getMaxHost(mask).binary().joinDot())
+                .minHostDecimal(address.getMinHost(mask).decimal().joinDot())
+                .minHostBinary(address.getMinHost(mask).binary().joinDot())
 
-        return null;
+                .maskNumber(mask.getCidr())
+                .amountOfHosts(mask.getHostCount())
+                .networkClass(NetworkClass.of(address))
+                .build();
     }
 
 }

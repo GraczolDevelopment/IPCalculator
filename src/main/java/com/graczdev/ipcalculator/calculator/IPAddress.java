@@ -43,18 +43,18 @@ public class IPAddress {
         return NetworkUtils.makeAddress(this, mask, type);
     }
 
-    public AddressParts getMinHost(IPMask mask) {
+    public IPAddress getMinHost(IPMask mask) {
         String network = make(AddressType.NETWORK, mask).binaryParts.joinDot();
         String result = network.substring(0, network.length() - 1) + AddressType.BROADCAST.getFill();
 
-        return AddressParts.of(result.split("\\."));
+        return new IPAddress(NetworkUtils.toDecimal(result));
     }
 
-    public AddressParts getMaxHost(IPMask mask) {
+    public IPAddress getMaxHost(IPMask mask) {
         String broadcast = make(AddressType.BROADCAST, mask).binaryParts.joinDot();
         String result = broadcast.substring(0, broadcast.length() - 1) + AddressType.NETWORK.getFill();
 
-        return AddressParts.of(result.split("\\."));
+        return new IPAddress(NetworkUtils.toDecimal(result));
     }
 
     public static class AddressParts extends Quad<String, String, String, String> {

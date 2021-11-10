@@ -29,7 +29,4 @@ public class AnaliseIPResult {
     private final int amountOfHosts;
     private final NetworkClass networkClass;
 
-
-
-
 }

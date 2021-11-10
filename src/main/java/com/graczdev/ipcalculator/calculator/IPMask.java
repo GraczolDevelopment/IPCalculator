@@ -2,7 +2,8 @@ package com.graczdev.ipcalculator.calculator;
 
 public enum IPMask {
 
-    MASK_0(0);
+    MASK_0(0),
+    MASK_20(20);
 
     private final int cidr;
     private final IPAddress address;
