@@ -1,7 +1,7 @@
 package com.graczdev.ipcalculator.calculator;
 
 public enum NetworkClass {
-    A(127),
+    A(128),
     B(192),
     C(224),
     D(240),

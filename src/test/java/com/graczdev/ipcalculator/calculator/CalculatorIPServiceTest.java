@@ -1,22 +1,15 @@
-package com.graczdev.ipcalculator;
+package com.graczdev.ipcalculator.calculator;
 
-import com.graczdev.ipcalculator.api.SubnetCalculatorApi;
-import com.graczdev.ipcalculator.calculator.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SubnetCalculatorApiTest {
+public class CalculatorIPServiceTest {
 
     @Test
     public void TestOfSubnetCalculatorApi() {
-
         CalculatorIPService calculatorIPService = new CalculatorIPService();
-        AnaliseIPResult result = calculatorIPService.analiseIP(new IPAddress("185.146.54.21"), IPMask.MASK_0);
-
-        SubnetCalculatorApi calculatorApi = new SubnetCalculatorApi()
-                .setIpAddress("185.146.54.21")
-                .setSubnetMask("255.255.240.0");
+        AnaliseIPResult result = calculatorIPService.analiseIP(new IPAddress("185.146.54.21"), IPMask.MASK_20);
 
         assertEquals("10111001.10010010.00110110.00010101", result.getIpAddressBinary());
         assertEquals("185.146.54.21",                       result.getIpAddressDecimal());
@@ -24,7 +17,7 @@ public class SubnetCalculatorApiTest {
         assertEquals("11111111.11111111.11110000.00000000", result.getMaskBinary());
         assertEquals("255.255.240.0",                       result.getMaskDecimal());
 
-        assertEquals(20,                                  result.getMaskNumber());
+        assertEquals(20,                                    result.getMaskNumber());
 
         assertEquals("10111001.10010010.00110000.00000000", result.getNetAddressBinary());
         assertEquals("185.146.48.0",                        result.getNetAddressDecimal());

@@ -2,6 +2,7 @@ package com.graczdev.ipcalculator.calculator;
 
 import panda.std.Option;
 import panda.std.Quad;
+import panda.std.stream.PandaStream;
 import panda.utilities.StringUtils;
 import panda.utilities.text.Joiner;
 
@@ -19,7 +20,13 @@ public class IPAddress {
         this.address = Option.attempt(UnknownHostException.class, () -> InetAddress.getByName(address))
                 .orThrow(() -> new RuntimeException(address + " isn't IP address!"));
         this.original = address;
-        this.decimalParts = AddressParts.of(original.split("\\."));
+
+        String[] decimalParts = PandaStream.of(original.split("\\."))
+                .map(Integer::parseInt)
+                .map(Object::toString)
+                .toArray(String[]::new);
+
+        this.decimalParts = AddressParts.of(decimalParts);
         this.binaryParts = AddressParts.of(NetworkUtils.toBinary(original.split("\\.")));
     }
 
@@ -40,19 +47,23 @@ public class IPAddress {
     }
 
     public IPAddress make(AddressType type, IPMask mask) {
-        return NetworkUtils.makeAddress(this, mask, type);
+        String joinedBinary = this.binary().join();
+        String removedBinary = joinedBinary.substring(0, mask.getCidr());
+        String filledBinary = removedBinary + type.getFill().repeat(32 - mask.getCidr());
+
+        return new IPAddress(NetworkUtils.toDecimal(filledBinary));
     }
 
     public IPAddress getMinHost(IPMask mask) {
         String network = make(AddressType.NETWORK, mask).binaryParts.joinDot();
-        String result = network.substring(0, network.length() - 1) + AddressType.BROADCAST.getFill();
+        String result = network.substring(0, network.length() - 1) + Bit.ONE;
 
         return new IPAddress(NetworkUtils.toDecimal(result));
     }
 
     public IPAddress getMaxHost(IPMask mask) {
         String broadcast = make(AddressType.BROADCAST, mask).binaryParts.joinDot();
-        String result = broadcast.substring(0, broadcast.length() - 1) + AddressType.NETWORK.getFill();
+        String result = broadcast.substring(0, broadcast.length() - 1) + Bit.ZERO;
 
         return new IPAddress(NetworkUtils.toDecimal(result));
     }
@@ -65,6 +76,10 @@ public class IPAddress {
 
         public static AddressParts of(String[] parts) {
             return new AddressParts(parts[0], parts[1], parts[2], parts[3]);
+        }
+
+        public static AddressParts of(String first, String second, String third, String fourth) {
+            return new AddressParts(first, second, third, fourth);
         }
 
         public String join() {

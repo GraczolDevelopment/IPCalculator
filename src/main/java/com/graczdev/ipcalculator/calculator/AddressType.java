@@ -2,16 +2,16 @@ package com.graczdev.ipcalculator.calculator;
 
 public enum AddressType {
 
-    NETWORK('0'),
-    BROADCAST('1');
+    NETWORK(Bit.ZERO),
+    BROADCAST(Bit.ONE);
 
-    private final char fill;
+    private final String fill;
 
-    AddressType(char fill) {
+    AddressType(String fill) {
         this.fill = fill;
     }
 
-    public Character getFill() {
+    public String getFill() {
         return fill;
     }
 

@@ -26,7 +26,7 @@ public class AnaliseIPResult {
     private final String minHostBinary;
 
     private final int maskNumber;
-    private final int amountOfHosts;
+    private final long amountOfHosts;
     private final NetworkClass networkClass;
 
 }
