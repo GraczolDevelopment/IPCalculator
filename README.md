@@ -1,3 +1,3 @@
 # IPCalculator
 
-Gui działa, kod tylko jeszcze zrobię łądniej
+Gui działa, kod tylko jeszcze zrobię ładniej
