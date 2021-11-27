@@ -1,3 +1,3 @@
 # IPCalculator
 
-Gui działa, kod tylko jeszcze zrobię ładniej
+Chyba jest git
