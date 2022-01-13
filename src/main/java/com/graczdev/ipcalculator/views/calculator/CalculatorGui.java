@@ -33,7 +33,7 @@ public class CalculatorGui extends VerticalLayout {
 
     public CalculatorGui() {
 
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 16; i++) {
             TextField textField = new TextField();
 
             resultTextList.add(i , textField);
@@ -85,6 +85,7 @@ public class CalculatorGui extends VerticalLayout {
             resultTextList.get(12).setValue(String.valueOf(analiseIPResult.getMaskNumber()));
             resultTextList.get(13).setValue(String.valueOf(analiseIPResult.getAmountOfHosts()));
             resultTextList.get(14).setValue(analiseIPResult.getNetworkClass().toString());
+            resultTextList.get(15).setValue(String.valueOf(analiseIPResult.getSubnetNumber()));
         });
 
         resultTextList.get(0) .setLabel("IP decimal: ");
@@ -102,6 +103,7 @@ public class CalculatorGui extends VerticalLayout {
         resultTextList.get(12).setLabel("Mask number: ");
         resultTextList.get(13).setLabel("Amount of Hosts: ");
         resultTextList.get(14).setLabel("Network Class: ");
+        resultTextList.get(15).setLabel("Subnet Number: ");
 
         add(headerH1);
         add(ipTextField);
@@ -128,6 +130,7 @@ public class CalculatorGui extends VerticalLayout {
         four.add(resultTextList.get(12));
         four.add(resultTextList.get(13));
         four.add(resultTextList.get(14));
+        four.add(resultTextList.get(15));
 
         add(first, second, third, four);
 

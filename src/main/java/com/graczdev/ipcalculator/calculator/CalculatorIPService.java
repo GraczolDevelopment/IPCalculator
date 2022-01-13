@@ -23,6 +23,7 @@ public class CalculatorIPService {
                 .minHostBinary(address.getMinHost(mask).binary().joinDot())
 
                 .maskNumber(mask.getCidr())
+                .subnetNumber(mask.getSubnetNumber())
                 .amountOfHosts(mask.getHostCount())
                 .networkClass(NetworkClass.of(address))
                 .build();

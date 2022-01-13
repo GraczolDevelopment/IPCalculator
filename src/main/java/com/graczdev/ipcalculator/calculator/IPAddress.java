@@ -49,7 +49,8 @@ public class IPAddress {
     public IPAddress make(AddressType type, IPMask mask) {
         String joinedBinary = this.binary().join();
         String removedBinary = joinedBinary.substring(0, mask.getCidr());
-        String filledBinary = removedBinary + type.getFill().repeat(32 - mask.getCidr());
+        String repeated = StringUtils.repeated(32 - mask.getCidr(), type.getFill());
+        String filledBinary = removedBinary + repeated;
 
         return new IPAddress(NetworkUtils.toDecimal(filledBinary));
     }
